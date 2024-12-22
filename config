@@ -1,18 +1,29 @@
 # i3 config file (v4)
-#
+
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod4
 
-# Picom for transparency[~/.config/picom.conf(small file)]
+# Looks maxing
+gaps inner  5
+for_window [class=".*"] border none
+
+# My custom keybinds
+bindsym $mod+e exec nautilus 
+bindsym Print exec --no-startup-id flameshot gui
+
+# Picom for transparency/roundedCorners[~/.config/picom.conf(small file)]
 exec --no-startup-id picom
 
 # Using xrandr to set this specific port to 144hz[This is specific to overlord pc]
 exec --no-startup-id xrandr --output DP-4 --mode 1920x1080 --rate 143.85
 
+# Setting background using feh
+exec_always feh --bg-fill ~/.config/walls/beauty.jpg
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Meslo LGM Mono 14
+font pango:Meslo LGM Mono 13
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -93,9 +104,8 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+t layout toggle split
 
-# toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
@@ -152,17 +162,18 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
-mode "resize" {
+mode "resize" 
+{
         # These bindings trigger as soon as you enter the resize mode
 
         # Pressing left will shrink the window’s width.
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -180,6 +191,20 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
+# This file has been changed[~/.config/i3status/config
+bar
+{
         status_command i3status
+	colors 
+	{
+    		background #111111
+    		statusline #FFFFFF
+    		separator  #000000
+
+    		focused_workspace  #D86048 #D86048 #FFFFFF
+    		active_workspace   #333333 #222222 #FFFFFF
+    		inactive_workspace #333333 #222222 #888888
+    		urgent_workspace   #2F343A #900000 #FFFFFF
+    		binding_mode       #2F343A #900000 #FFFFFF
+	}
 }
