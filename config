@@ -5,20 +5,34 @@
 set $mod Mod4
 
 # Looks maxing
-gaps inner  5
+gaps inner 10
 for_window [class=".*"] border none
 
-# My custom keybinds
+# class                 border  bground text    indicator child_border
+client.focused          #66FF78 #66FF78 #000000 #66FF78   #66FF78
+client.focused_inactive #5F676A #5F676A #FFFFFF #5F676A   #5F676A
+client.unfocused        #333333 #222222 #888888 #292D2E   #222222
+client.urgent           #FF0000 #FF0000 #FFFFFF #FF0000   #FF0000
+client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
+
+client.background       #FFFFFF
+
+# My custom dmenu colors
+bindsym $mod+d exec "dmenu_run -nf '#FFFFFF' -nb '#343434' -sb '#6853FF' -sf '#FFFFFF' -fn 'monospace-10' -p 'dmenu prompt &gt;'"
+
+# My custom keybinds and mouse settings
 bindsym $mod+e exec nautilus 
 bindsym Print exec --no-startup-id flameshot gui
+exec --no-startup-id xinput set-prop 13 "libinput Accel Profile Enabled" 1 0
+exec --no-startup-id xinput set-prop 13 "libinput Accel Speed" -0.8
 
-# Picom for transparency/roundedCorners[~/.config/picom.conf(small file)]
+# PICOM for transparency/roundedCorners[~/.config/picom.conf(small file)]
 exec --no-startup-id picom
 
-# Using xrandr to set this specific port to 144hz[This is specific to overlord pc]
+# XRANDR to set this specific port to 144hz[This is specific to overlord pc]
 exec --no-startup-id xrandr --output DP-4 --mode 1920x1080 --rate 143.85
 
-# Setting background using feh
+# FEH for setting wallpaper
 exec_always feh --bg-fill ~/.config/walls/beauty.jpg
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -28,7 +42,6 @@ font pango:Meslo LGM Mono 13
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
-
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -60,8 +73,10 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+Shift+q kill
 
+# This is the default dmenu bind
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+# bindsym $mod+d exec --no-startup-id dmenu_run
+
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -162,7 +177,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
-mode "resize" 
+mode "resize"
 {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -192,19 +207,21 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 # This file has been changed[~/.config/i3status/config
+
+# USE THIS TO CUSTOMIZE COLORS
+# thomashunter.name/i3-configurator/
 bar
 {
         status_command i3status
-	colors 
-	{
-    		background #111111
-    		statusline #FFFFFF
-    		separator  #000000
+colors {
+   background #343434
+    statusline #FFFFFF
+    separator  #343434
 
-    		focused_workspace  #D86048 #D86048 #FFFFFF
-    		active_workspace   #333333 #222222 #FFFFFF
-    		inactive_workspace #333333 #222222 #888888
-    		urgent_workspace   #2F343A #900000 #FFFFFF
-    		binding_mode       #2F343A #900000 #FFFFFF
-	}
+    focused_workspace  #6853FF #6853FF #FFFFFF
+    active_workspace   #333333 #222222 #FFFFFF
+    inactive_workspace #333333 #222222 #888888
+    urgent_workspace   #2F343A #FF0000 #FFFFFF
+    binding_mode       #2F343A #FF0000 #FFFFFF 
+  }	
 }
